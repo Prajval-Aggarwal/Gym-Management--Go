@@ -6,7 +6,7 @@ import (
 
 	"gym/server"
 	"gym/server/db"
-
+	
 	"github.com/joho/godotenv"
 )
 
@@ -19,6 +19,8 @@ func main() {
 
 	app := server.NewServer(connection)
 	server.ConfigureRoutes(app)
+	db.Transfer(connection)
+
 
 	if err := app.Run(os.Getenv("PORT")); err != nil {
 		log.Print(err)

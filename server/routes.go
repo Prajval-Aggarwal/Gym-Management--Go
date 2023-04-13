@@ -6,8 +6,6 @@ import (
 
 func ConfigureRoutes(server *Server) {
 
-	userHandler := handler.UserHandler{
-		DB: server.db,
-	}
-	server.engine.GET("/create", userHandler.CreateUserHandler)
+
+	server.engine.POST("/create", handler.CreateUserHandler)
 }
