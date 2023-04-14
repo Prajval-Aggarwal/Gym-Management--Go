@@ -30,7 +30,7 @@ func CreateUserService(context *gin.Context, decodedData request.CreateUserReque
 
 }
 
-func GetUserService(context *gin.Context, decodedData request.UserRequest) {
+func GetUserByIdService(context *gin.Context, decodedData request.UserRequest) {
 	var userGetter model.User
 	err := db.FindById(&userGetter, decodedData.UserId, "user_id")
 	if err != nil {
@@ -54,7 +54,7 @@ func UserAttendenceService(context *gin.Context, userId request.UserRequest) {
 	userAttendence.Date = now.Format("02 Jan 2006")
 
 	err := db.CreateRecord(&userAttendence)
-	if err!=nil{
+	if err != nil {
 		response.ErrorResponse(context, 500, err.Error())
 		return
 	}

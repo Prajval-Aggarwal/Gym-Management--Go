@@ -56,7 +56,7 @@ func GetUsersWithEmployeesHandler(context *gin.Context) {
 func EmployeeAttendenceHandler(context *gin.Context) {
 	context.Writer.Header().Set("Content-Type", "application/json")
 
-	var empId request.EmployeeAttRequest
+	var empId request.EmployeeRequest
 
 	reqBody, err := ioutil.ReadAll(context.Request.Body)
 	if err != nil {
@@ -100,4 +100,23 @@ func EmployeeRoleHandler(context *gin.Context) {
 		return
 	}
 	employee.EmployeeRoleService(context, createEmpRole)
+}
+
+func GetEmployeeByIdHandler(context *gin.Context) {
+	context.Writer.Header().Set("Content-Type", "application/json")
+
+	var empId request.EmployeeRequest
+
+	reqBody, err := ioutil.ReadAll(context.Request.Body)
+	if err != nil {
+		response.ErrorResponse(context, 400, err.Error())
+		return
+	}
+	err = json.Unmarshal(reqBody, &empId)
+	if err != nil {
+		response.ErrorResponse(context, 400, err.Error())
+		return
+	}
+
+	employee.GetEmployeeByIdService(context, empId)
 }

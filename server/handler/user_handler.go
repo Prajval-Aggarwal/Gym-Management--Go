@@ -44,7 +44,7 @@ func GetUserByIdHandler(context *gin.Context) {
 		return
 	}
 
-	user.GetUserService(context, userId)
+	user.GetUserByIdService(context, userId)
 
 }
 

@@ -80,7 +80,7 @@ func CreateEmployeeService(context *gin.Context, Data request.CreateEmployeeRequ
 	)
 }
 
-func EmployeeAttendenceService(context *gin.Context, userId request.EmployeeAttRequest) {
+func EmployeeAttendenceService(context *gin.Context, userId request.EmployeeRequest) {
 	var empAttendence model.EmpAttendence
 	now := time.Now()
 	empAttendence.User_Id = userId.EmpId
@@ -130,4 +130,20 @@ func EmployeeRoleService(context *gin.Context, empRoleData model.EmpTypes) {
 			context,
 		)
 	}
+}
+
+func GetEmployeeByIdService(context *gin.Context, empId request.EmployeeRequest) {
+	var empGetter model.User
+	err := db.FindById(&empGetter, empId.EmpId, "user_id")
+	if err != nil {
+		response.ErrorResponse(context, 500, err.Error())
+		return
+	}
+	response.ShowResponse(
+		"Success",
+		200,
+		"Employee retrieved",
+		empGetter,
+		context,
+	)
 }

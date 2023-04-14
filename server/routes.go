@@ -6,6 +6,11 @@ import (
 
 func ConfigureRoutes(server *Server) {
 
+	//users
+	server.engine.POST("/createUser", handler.CreateUserHandler)
+	server.engine.POST("/getUserById", handler.GetUserByIdHandler)
+	server.engine.POST("/userAttendence", handler.UserAttendenceHandler)
+
 	//Membership routes
 	server.engine.GET("getMembership", handler.GetMembershipHandler)
 	server.engine.POST("/createMembership", handler.CreateMembershipHandler)
@@ -24,16 +29,14 @@ func ConfigureRoutes(server *Server) {
 	server.engine.GET("/empWithuser", handler.GetUsersWithEmployeesHandler)
 	server.engine.POST("/empAttendence", handler.EmployeeAttendenceHandler)
 
-	//users
-	server.engine.POST("/create", handler.CreateUserHandler)
-	server.engine.POST("/getUser", handler.GetUserByIdHandler)
-	server.engine.POST("/userAttendence", handler.UserAttendenceHandler)
-
 	//slots
 	server.engine.POST("/slotUpdate", handler.SlotUpdateHandler)
 
 	//subscriptions
 	server.engine.POST("/createSubscription", handler.CreateSubscriptionHandler)
 	server.engine.DELETE("/endSubscription", handler.EndSubscriptionHandler)
+
+	//Payment Routes
+	server.engine.POST("/createPayment", handler.MakePaymentHandler)
 
 }
