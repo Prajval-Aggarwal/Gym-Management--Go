@@ -31,7 +31,6 @@ func InitDB() *gorm.DB {
 	}
 	Execute(db)
 	AutoMigrateDatabase(db)
-
 	return db
 
 }

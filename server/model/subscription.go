@@ -28,13 +28,13 @@ type Subscription struct {
 	StartDate  string         `json:"start_date"`
 	EndDate    string         `json:"end_date"`
 	Duration   float64        `json:"duration"`
-	Slot_id    int64          `json:"slot_id"`
+	Slot_id    int            `json:"slot_id"`
 	CreatedAt  time.Time      `json:"createdAt"`
 	UpdatedAt  time.Time      `json:"updatedAt"`
 	DeletedAt  gorm.DeletedAt `json:"deletedAt" gorm:"index"`
 }
 
-type SubsType struct {
+type Membership struct {
 	Subs_Name string         `json:"subs_name" gorm:"unique"`
 	Price     float64        `json:"price"`
 	CreatedAt time.Time      `json:"createdAt"`
