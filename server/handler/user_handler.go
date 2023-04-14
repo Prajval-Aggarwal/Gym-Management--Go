@@ -13,14 +13,57 @@ import (
 func CreateUserHandler(context *gin.Context) {
 	context.Writer.Header().Set("Content-Type", "application/json")
 	var createUserRequest request.CreateUserRequest
-
-	reqBody, _ := ioutil.ReadAll(context.Request.Body)
-
-	err := json.Unmarshal(reqBody, &createUserRequest)
+	reqBody, err := ioutil.ReadAll(context.Request.Body)
 	if err != nil {
 		response.ErrorResponse(context, 400, err.Error())
 		return
 	}
-	user.CreateUserService(context, createUserRequest)
 
+	err = json.Unmarshal(reqBody, &createUserRequest)
+	if err != nil {
+		response.ErrorResponse(context, 400, err.Error())
+		return
+	}
+
+	user.CreateUserService(context, createUserRequest)
+}
+
+func GetUserByIdHandler(context *gin.Context) {
+	context.Writer.Header().Set("Content-Type", "application/json")
+
+	var userId request.UserRequest
+
+	reqBody, err := ioutil.ReadAll(context.Request.Body)
+	if err != nil {
+		response.ErrorResponse(context, 400, err.Error())
+		return
+	}
+	err = json.Unmarshal(reqBody, &userId)
+	if err != nil {
+		response.ErrorResponse(context, 400, err.Error())
+		return
+	}
+
+	user.GetUserService(context, userId)
+
+}
+
+func UserAttendenceHandler(context *gin.Context) {
+	context.Writer.Header().Set("Content-Type", "application/json")
+
+	var userId request.UserRequest
+
+	reqBody, err := ioutil.ReadAll(context.Request.Body)
+	if err != nil {
+		response.ErrorResponse(context, 400, err.Error())
+		return
+	}
+
+	err = json.Unmarshal(reqBody, &userId)
+	if err != nil {
+		response.ErrorResponse(context, 400, err.Error())
+		return
+	}
+
+	user.UserAttendenceService(context, userId)
 }

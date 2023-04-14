@@ -28,6 +28,7 @@ func AutoMigrateDatabase(db *gorm.DB) {
 	}
 	if dbVersion.Version < 2 {
 		err := db.AutoMigrate(&model.Slot{})
+
 		if err != nil {
 			panic(err)
 		}

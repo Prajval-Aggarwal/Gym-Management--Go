@@ -28,7 +28,7 @@ type Subscription struct {
 	StartDate  string         `json:"start_date"`
 	EndDate    string         `json:"end_date"`
 	Duration   float64        `json:"duration"`
-	Slot_id    int64          `json:"slot_id"`
+	Slot_id    int            `json:"slot_id"`
 	CreatedAt  time.Time      `json:"createdAt"`
 	UpdatedAt  time.Time      `json:"updatedAt"`
 	DeletedAt  gorm.DeletedAt `json:"deletedAt" gorm:"index"`
@@ -36,7 +36,7 @@ type Subscription struct {
 
 type Membership struct {
 	MemName   string         `json:"membershipName" gorm:"unique" validate:"required"`
-	Price     float64        `json:"price" validate:"required"`  
+	Price     float64        `json:"price" validate:"required"`
 	CreatedAt time.Time      `json:"createdAt"`
 	UpdatedAt time.Time      `json:"updatedAt"`
 	DeletedAt gorm.DeletedAt `json:"deletedAt" gorm:"index"`
