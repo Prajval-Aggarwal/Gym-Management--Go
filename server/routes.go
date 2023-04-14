@@ -6,13 +6,8 @@ import (
 
 func ConfigureRoutes(server *Server) {
 
-	//users
-	server.engine.POST("/createUser", handler.CreateUserHandler)
-	server.engine.POST("/getUserById", handler.GetUserByIdHandler)
-	server.engine.POST("/userAttendence", handler.UserAttendenceHandler)
-
 	//Membership routes
-	server.engine.GET("getMembership", handler.GetMembershipHandler)
+	server.engine.GET("/getMembership", handler.GetMembershipHandler)
 	server.engine.POST("/createMembership", handler.CreateMembershipHandler)
 	server.engine.PUT("/updateMembership", handler.UpdateMembershipHandler)
 	server.engine.PUT("/deleteMembership", handler.DeleteMembershipHandler)
@@ -28,6 +23,12 @@ func ConfigureRoutes(server *Server) {
 	server.engine.POST("/createEmpRole", handler.EmployeeRoleHandler)
 	server.engine.GET("/empWithuser", handler.GetUsersWithEmployeesHandler)
 	server.engine.POST("/empAttendence", handler.EmployeeAttendenceHandler)
+
+	//users
+	server.engine.POST("/create", handler.CreateUserHandler)
+	server.engine.POST("/getUser", handler.GetUserByIdHandler)
+	server.engine.POST("/userAttendence", handler.UserAttendenceHandler)
+	server.engine.GET("/getUsers", handler.GetAllUsers)
 
 	//slots
 	server.engine.POST("/slotUpdate", handler.SlotUpdateHandler)
