@@ -72,16 +72,12 @@ func EmployeeRoleHandler(context *gin.Context) {
 }
 
 func GetEmployeeByIdHandler(context *gin.Context) {
-	context.Writer.Header().Set("Content-Type", "application/json")
+	utils.SetHeader(context)
 
 	var empId request.EmployeeRequest
 
-	reqBody, err := ioutil.ReadAll(context.Request.Body)
-	if err != nil {
-		response.ErrorResponse(context, 400, err.Error())
-		return
-	}
-	err = json.Unmarshal(reqBody, &empId)
+	utils.RequestDecoding(context, &empId)
+	err := validation.CheckValidation(&empId)
 	if err != nil {
 		response.ErrorResponse(context, 400, err.Error())
 		return
