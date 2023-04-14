@@ -13,6 +13,7 @@ func CreateMembershipService(context *gin.Context, membershipData model.Membersh
 	err := db.CreateRecord(&membershipData)
 	if err != nil {
 		response.ErrorResponse(context, 500, err.Error())
+		return
 	}
 	response.ShowResponse(
 		"Success",

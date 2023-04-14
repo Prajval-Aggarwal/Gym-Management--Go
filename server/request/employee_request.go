@@ -6,6 +6,6 @@ type CreateEmployeeRequest struct {
 	Role     string `json:"role" validate:"required"`
 }
 
-type EmployeeAttRequest struct {
+type EmployeeRequest struct {
 	EmpId string `json:"empId" validate:"required"`
 }

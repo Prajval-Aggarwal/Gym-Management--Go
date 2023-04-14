@@ -46,7 +46,7 @@ func GetUsersWithEmployeesHandler(context *gin.Context) {
 func EmployeeAttendenceHandler(context *gin.Context) {
 	utils.SetHeader(context)
 
-	var empId request.EmployeeAttRequest
+	var empId request.EmployeeRequest
 
 	utils.RequestDecoding(context, &empId)
 
@@ -69,4 +69,19 @@ func EmployeeRoleHandler(context *gin.Context) {
 		return
 	}
 	employee.EmployeeRoleService(context, createEmpRole)
+}
+
+func GetEmployeeByIdHandler(context *gin.Context) {
+	utils.SetHeader(context)
+
+	var empId request.EmployeeRequest
+
+	utils.RequestDecoding(context, &empId)
+	err := validation.CheckValidation(&empId)
+	if err != nil {
+		response.ErrorResponse(context, 400, err.Error())
+		return
+	}
+
+	employee.GetEmployeeByIdService(context, empId)
 }

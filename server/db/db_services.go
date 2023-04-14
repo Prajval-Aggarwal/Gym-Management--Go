@@ -1,8 +1,6 @@
 package db
 
 import (
-	"fmt"
-
 	"gorm.io/gorm"
 )
 
@@ -18,8 +16,6 @@ func CreateRecord(data interface{}) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("after record creation")
-
 	return nil
 }
 

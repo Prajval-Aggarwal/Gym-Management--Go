@@ -30,12 +30,14 @@ func ConfigureRoutes(server *Server) {
 	server.engine.POST("/userAttendence", handler.UserAttendenceHandler)
 	server.engine.GET("/getUsers", handler.GetAllUsers)
 
-
 	//slots
 	server.engine.POST("/slotUpdate", handler.SlotUpdateHandler)
 
 	//subscriptions
 	server.engine.POST("/createSubscription", handler.CreateSubscriptionHandler)
 	server.engine.DELETE("/endSubscription", handler.EndSubscriptionHandler)
+
+	//Payment Routes
+	server.engine.POST("/createPayment", handler.MakePaymentHandler)
 
 }
