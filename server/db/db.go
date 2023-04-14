@@ -20,10 +20,6 @@ func InitDB() *gorm.DB {
 		os.Getenv("DB_SSL"),
 	)
 
-	fmt.Println("")
-	fmt.Println(dataSourceName)
-	fmt.Println("")
-
 	db, err := gorm.Open(postgres.Open(dataSourceName), &gorm.Config{})
 
 	if err != nil {

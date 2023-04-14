@@ -15,8 +15,8 @@ func CreateUserService(context *gin.Context, decodedData request.CreateUserReque
 	var userCreated model.User
 	userCreated.User_Name = decodedData.Name
 	userCreated.Gender = decodedData.Gender
-	
-	err := db.CreateRecord(userCreated)
+
+	err := db.CreateRecord(&userCreated)
 	if err != nil {
 		fmt.Println("FAT GYA")
 		response.ErrorResponse(context, 500, err.Error())

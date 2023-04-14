@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"gym/server/request"
 	"gym/server/response"
 	"gym/server/services/user"
@@ -22,7 +21,6 @@ func CreateUserHandler(context *gin.Context) {
 		response.ErrorResponse(context, 400, err.Error())
 		return
 	}
-	fmt.Println("data: ", createUserRequest)
 	user.CreateUserService(context, createUserRequest)
 
 }

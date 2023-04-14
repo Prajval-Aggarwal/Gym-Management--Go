@@ -34,9 +34,9 @@ type Subscription struct {
 	DeletedAt  gorm.DeletedAt `json:"deletedAt" gorm:"index"`
 }
 
-type SubsType struct {
-	Subs_Name string         `json:"subs_name" gorm:"unique"`
-	Price     float64        `json:"price"`
+type Membership struct {
+	MemName   string         `json:"membershipName" gorm:"unique" validate:"required"`
+	Price     float64        `json:"price" validate:"required"`  
 	CreatedAt time.Time      `json:"createdAt"`
 	UpdatedAt time.Time      `json:"updatedAt"`
 	DeletedAt gorm.DeletedAt `json:"deletedAt" gorm:"index"`
