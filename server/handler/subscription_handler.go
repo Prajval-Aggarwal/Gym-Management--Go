@@ -1,27 +1,23 @@
 package handler
 
 import (
-	"encoding/json"
 	"gym/server/request"
 	"gym/server/response"
 	"gym/server/services/subscriptions"
-	"io/ioutil"
-
+	"gym/server/utils"
+	"gym/server/validation"
 	"github.com/gin-gonic/gin"
 )
 
 func CreateSubscriptionHandler(context *gin.Context) {
-	context.Writer.Header().Set("Content-Type", "application/json")
+	
+	utils.SetHeader(context)
 
 	var subscriptionCreate request.CreateSubRequest
 
-	reqBody, err := ioutil.ReadAll(context.Request.Body)
-	if err != nil {
-		response.ErrorResponse(context, 400, err.Error())
-		return
-	}
+	utils.RequestDecoding(context, &subscriptionCreate)
 
-	err = json.Unmarshal(reqBody, &subscriptionCreate)
+	err := validation.CheckValidation(&subscriptionCreate)
 	if err != nil {
 		response.ErrorResponse(context, 400, err.Error())
 		return
@@ -31,16 +27,14 @@ func CreateSubscriptionHandler(context *gin.Context) {
 }
 
 func EndSubscriptionHandler(context *gin.Context) {
-	context.Writer.Header().Set("Content-Type", "application/json")
+
+	utils.SetHeader(context)
 
 	var subscriptionEnd request.EndSubRequest
 
-	reqBody, err := ioutil.ReadAll(context.Request.Body)
-	if err != nil {
-		response.ErrorResponse(context, 400, err.Error())
-		return
-	}
-	err = json.Unmarshal(reqBody, &subscriptionEnd)
+	utils.RequestDecoding(context, &subscriptionEnd)
+
+	err := validation.CheckValidation(&subscriptionEnd)
 	if err != nil {
 		response.ErrorResponse(context, 400, err.Error())
 		return

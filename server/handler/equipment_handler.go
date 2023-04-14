@@ -1,38 +1,33 @@
 package handler
 
 import (
-	"encoding/json"
 	"gym/server/model"
 	"gym/server/response"
 	"gym/server/services/equipment"
-	"io/ioutil"
+	"gym/server/utils"
+	"gym/server/validation"
 
 	"github.com/gin-gonic/gin"
 )
 
 func CreateEquipmentHandler(context *gin.Context) {
-	context.Writer.Header().Set("Content-Type", "application/json")
+
+	utils.SetHeader(context)
+
 	var createEquipment model.Equipment
-	reqBody, err := ioutil.ReadAll(context.Request.Body)
+
+	utils.RequestDecoding(context, &createEquipment)
+
+	err := validation.CheckValidation(&createEquipment)
 	if err != nil {
 		response.ErrorResponse(context, 400, err.Error())
 		return
 	}
-	err = json.Unmarshal(reqBody, &createEquipment)
-	if err != nil {
-		response.ErrorResponse(context, 400, err.Error())
-		return
-	}
-	//Error handling
-	validationErr := Validate.Struct(createEquipment)
-	if validationErr != nil {
-		response.ErrorResponse(context, 400, validationErr.Error())
-		return
-	}
+
 	equipment.CreateEquipmentService(context, createEquipment)
 
 }
 func GetEquipmentHandler(context *gin.Context) {
-	context.Writer.Header().Set("Content-Type", "application/json")
+	utils.SetHeader(context)
 	equipment.GetEquipmentService(context)
 }
