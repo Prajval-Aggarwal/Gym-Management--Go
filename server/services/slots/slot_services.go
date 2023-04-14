@@ -36,9 +36,9 @@ func SlotServices(context *gin.Context, slotRequest request.UpdateSlotRequest) {
 		return
 	}
 	slot.Available_space += 1
-	err = db.UpdateRecord(&slot, oldSlotId, "slot_id")
-	if err != nil {
-		response.ErrorResponse(context, 500, err.Error())
+	result := db.UpdateRecord(&slot, oldSlotId, "slot_id")
+	if result.Error != nil {
+		response.ErrorResponse(context, 500, result.Error.Error())
 		return
 	}
 
@@ -50,15 +50,15 @@ func SlotServices(context *gin.Context, slotRequest request.UpdateSlotRequest) {
 	}
 	slot1.Available_space = slot1.Available_space - 1
 
-	err = db.UpdateRecord(&slot1, slotRequest.SlotId, "slot_id")
-	if err != nil {
-		response.ErrorResponse(context, 500, err.Error())
+	result = db.UpdateRecord(&slot1, slotRequest.SlotId, "slot_id")
+	if result.Error != nil {
+		response.ErrorResponse(context, 500, result.Error.Error())
 		return
 	}
 
-	err = db.UpdateRecord(&subscription, slotRequest.UserId, "user_id")
-	if err != nil {
-		response.ErrorResponse(context, 500, err.Error())
+	result = db.UpdateRecord(&subscription, slotRequest.UserId, "user_id")
+	if result.Error != nil {
+		response.ErrorResponse(context, 500, result.Error.Error())
 		return
 	}
 	response.ShowResponse(
@@ -78,7 +78,7 @@ func SlotDistribution() {
 	slotStartTime := startTime
 	var slot model.Slot
 	for i := 1; i <= noOfSlots; i++ {
-		slot.Slot_Id = i
+		slot.SlotId = i
 		seTime := slotStartTime.Add(time.Hour * 2)
 		slot.Start_time = slotStartTime.Format("15:04")
 		slot.End_time = seTime.Format("15:04")

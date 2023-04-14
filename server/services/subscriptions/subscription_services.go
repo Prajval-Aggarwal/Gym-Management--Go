@@ -41,9 +41,9 @@ func CreateSubscriptionService(context *gin.Context, subscriptionCreate request.
 	fmt.Println("slots data is :", slots)
 	slots.Available_space -= 1
 	fmt.Println("slots is", slots)
-	err = db.UpdateRecord(&slots, slots.Slot_Id, "slot_id")
-	if err != nil {
-		response.ErrorResponse(context, 500, err.Error())
+	result := db.UpdateRecord(&slots, slots.SlotId, "slot_id")
+	if result.Error != nil {
+		response.ErrorResponse(context, 500, result.Error.Error())
 		return
 	}
 	fmt.Println("asdasdsadsadad")
@@ -97,7 +97,7 @@ func EndSubscriptionService(context *gin.Context, subscriptionEnd request.EndSub
 	var subscription model.Subscription
 	var payment model.Payment
 
-	err:=db.FindById(&subscription, subscriptionEnd.UserId, "user_id")
+	err := db.FindById(&subscription, subscriptionEnd.UserId, "user_id")
 	if err != nil {
 		response.ErrorResponse(context, 500, err.Error())
 		return
@@ -119,15 +119,15 @@ func EndSubscriptionService(context *gin.Context, subscriptionEnd request.EndSub
 	subscription.EndDate = now.Format("02 Jan 2006")
 	payment.OfferAmount -= MoneyRefund
 
-	err = db.UpdateRecord(&payment, subscriptionEnd.UserId, "user_id")
-	if err != nil {
-		response.ErrorResponse(context, 400, err.Error())
+	result := db.UpdateRecord(&payment, subscriptionEnd.UserId, "user_id")
+	if result.Error != nil {
+		response.ErrorResponse(context, 400, result.Error.Error())
 		return
 	}
 
-	err = db.UpdateRecord(&subscription, subscriptionEnd.UserId, "user_id")
-	if err != nil {
-		response.ErrorResponse(context, 400, err.Error())
+	result = db.UpdateRecord(&subscription, subscriptionEnd.UserId, "user_id")
+	if result.Error != nil {
+		response.ErrorResponse(context, 400, result.Error.Error())
 		return
 	}
 
@@ -143,9 +143,9 @@ func EndSubscriptionService(context *gin.Context, subscriptionEnd request.EndSub
 	fmt.Println("slots data is :", slots)
 	slots.Available_space += 1
 	fmt.Println("slots is", slots)
-	err = db.UpdateRecord(&slots, slots.Slot_Id, "slot_id")
-	if err != nil {
-		response.ErrorResponse(context, 400, err.Error())
+	result = db.UpdateRecord(&slots, slots.SlotId, "slot_id")
+	if result.Error != nil {
+		response.ErrorResponse(context, 400, result.Error.Error())
 		return
 	}
 	response.ShowResponse(

@@ -2,7 +2,6 @@ package db
 
 import (
 	"fmt"
-	"gym/server/model"
 
 	"gorm.io/gorm"
 )
@@ -33,13 +32,11 @@ func FindById(data interface{}, id interface{}, columName string) error {
 	return nil
 }
 
-func UpdateRecord(data interface{}, id interface{}, columName string) error {
+func UpdateRecord(data interface{}, id interface{}, columName string) *gorm.DB {
 	column := columName + "=?"
-	err := db.Where(column, id).Updates(data).Error
-	if err != nil {
-		return err
-	}
-	return nil
+	result := db.Where(column, id).Updates(data)
+
+	return result
 }
 
 func QueryExecutor(query string, data interface{}, args ...interface{}) error {
@@ -53,7 +50,7 @@ func QueryExecutor(query string, data interface{}, args ...interface{}) error {
 	return nil
 }
 
-func DeleteRecord(data interface{}, id string, columName string) error {
+func DeleteRecord(data interface{}, id interface{}, columName string) error {
 	column := columName + "=?"
 	result := db.Where(column, id).Delete(data)
 	if result.Error != nil {
